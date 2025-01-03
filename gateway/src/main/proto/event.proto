@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.example.grpc";
+option java_outer_classname = "EventServiceProto";
+
+service EventService {
+  rpc GetEventById(GetEventRequest) returns (GetEventResponse);
+
+  rpc GetAllEvents(Empty) returns (GetAllEventsResponse);
+}
+
+message GetEventRequest {
+  int64 id = 1;
+}
+
+message GetEventResponse {
+  Event event = 1;
+}
+
+message Empty {}
+
+message GetAllEventsResponse {
+  repeated Event events = 1;
+}
+
+message Event {
+  int64 id = 1;
+  string name = 2;
+  string date = 3;
+  string location = 4;
+}
