@@ -1,53 +1,53 @@
-# Microservice Architecture with Docker Compose
+# Микросервисная архитектура с Docker Compose
 
-This repository demonstrates a microservice-based architecture using Docker Compose. The architecture consists of several core components to ensure scalability, maintainability, and observability. The system includes gateway routing, CRUD operations, caching, logging, monitoring, and database storage.
+Этот репозиторий демонстрирует архитектуру на основе микросервисов с использованием Docker Compose. Архитектура включает несколько ключевых компонентов для обеспечения масштабируемости, сопровождаемости и наблюдаемости. Система включает маршрутизацию через шлюз, операции CRUD, кэширование, логирование, мониторинг и хранение данных в базе данных.
 
-# Architecture Components
+# Компоненты архитектуры
 
-## 1. Gateway Service
-* Provides a RESTful API for external requests.
-* Routes requests to the Domain service via gRPC.
-* Implements:
-  * Logging: Logs incoming and outgoing requests using ELK Stack.
-  * Caching: Uses Redis for caching GET requests.
-  * Metrics: Collects performance metrics via Prometheus and visualizes them in Grafana.
+## 1. Сервис-шлюз (Gateway Service)
+* Предоставляет RESTful API для внешних запросов.
+* Перенаправляет запросы в доменный сервис через gRPC.
+* Реализует:
+  * Логирование: Логирует входящие и исходящие запросы с использованием стека ELK.
+  * Кэширование: Использует Redis для кэширования GET-запросов.
+  * Метрики: Собирает метрики производительности через Prometheus и визуализирует их в Grafana.
 
-## 2. Domain Service
-* Handles CRUD operations exposed via gRPC.
-* Processes:
-  * GET requests: Handled synchronously.
-  * PUT, POST, DELETE requests: Sent asynchronously via RabbitMQ.
-* Interacts with the database (PostgreSQL/MongoDB) for data persistence.
+## 2. Доменный сервис (Domain Service)
+* Обрабатывает операции CRUD, доступные через gRPC.
+* Обработка:
+  * GET-запросы: Обрабатываются синхронно.
+  * PUT, POST, DELETE-запросы: Отправляются асинхронно через RabbitMQ.
+* Взаимодействует с базой данных (PostgreSQL/MongoDB) для хранения данных.
 
 ## 3. Redis
-* Configured as a caching layer to speed up GET requests.
+* Настроен как слой кэширования для ускорения GET-запросов.
 
 ## 4. RabbitMQ
-* Configured to handle message queuing for asynchronous operations between Gateway and Domain services.
+* Настроен для обработки очередей сообщений для асинхронного взаимодействия между шлюзом и доменным сервисом.
 
-## 5. ELK Stack
-* OpenSearch: Indexes logs from Gateway and other services.
-* Logstash: Collects and processes logs.
-* Kibana: Visualizes logs and provides tools for event analysis.
+## 5. Стек ELK
+* OpenSearch: Индексирует логи от шлюза и других сервисов.
+* Logstash: Собирает и обрабатывает логи.
+* Kibana: Визуализирует логи и предоставляет инструменты для анализа событий.
 
 ## 6. Prometheus + Grafana
-* Prometheus collects system metrics from services.
-* Grafana visualizes metrics with custom dashboards.
+* Prometheus собирает системные метрики от сервисов.
+* Grafana визуализирует метрики с помощью пользовательских дашбордов.
 
-## 7. Database
-* Configured for CRUD operations by the Domain service.
-* Includes an admin interface for managing the database:
-  * PostgreSQL: Uses pgAdmin.
+## 7. База данных
+* Настроена для операций CRUD со стороны доменного сервиса.
+* Включает интерфейс администратора для управления базой данных:
+  * PostgreSQL: Используется pgAdmin.
 
-# Setup and Run
+# Установка и запуск
 
-* Clone the repository: `git clone https://github.com/yourusername/Microservice-Architecture-Dockerized.git`
-* Navigate into the directory: `cd Microservice-Architecture-Dockerized`
-* Start the services: `docker-compose up --build`
+* Клонировать репозиторий: `git clone https://github.com/yourusername/Microservice-Architecture-Dockerized.git`
+* Перейти в директорию: `cd Microservice-Architecture-Dockerized`
+* Запустить сервисы: `docker-compose up --build`
 
-# Access Components
+# Доступ к компонентам
 
-* Gateway: `http://localhost:<gateway-port>`
-* Kibana (Logs): `http://localhost:5601`
-* Grafana (Metrics): `http://localhost:3000`
+* Шлюз: `http://localhost:<gateway-port>`
+* Kibana (Логи): `http://localhost:5601`
+* Grafana (Метрики): `http://localhost:3000`
 * pgAdmin: `http://localhost:5050`
